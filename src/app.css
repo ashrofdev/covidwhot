@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+}
+.App {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.field {
+    padding: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border: 2px solid white;
+    width: 5rem;
+    margin: 5rem auto;
+    border-radius: 1rem;
+    position: relative;
+}
+
+
+.player {
+    display: flex;
+    justify-content: space-between;
+}

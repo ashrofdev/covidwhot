@@ -1,0 +1,30 @@
+.card {
+    width: 5.5rem;
+    background-color: white;
+    height: 8rem;
+    border-radius: .5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.num {
+    position: absolute;
+    top: .2rem;
+    left: .2rem;
+    font-size: 1.4rem;
+}
+.num2 {
+    position: absolute;
+    bottom: .2rem;
+    right: .2rem;
+    font-size: 1.4rem;
+}
+
+.card .shape {
+    position: relative;
+    font-size: 3.5rem;
+    margin: auto;
+    padding-top: 2rem;
+    padding-left: 1rem;
+    margin-right: 2rem;
+}
