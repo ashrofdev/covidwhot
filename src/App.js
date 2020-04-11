@@ -92,28 +92,38 @@ class App extends Component {
   onCardClick = (card, shape, num, nextPlayer) => {
     card.preventDefault()
     
-    if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
-      this.setState({currentPlayer: nextPlayer})
-      card.target.remove()
-      this.setState({
-        fieldCard: {
-          shape,
-          num
-        }
-      })
+    if (this.state.currentPlayer === nextPlayer) {
+      alert('not your turn')
     } else {
-      alert('card must be equal')
+      if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
+        this.setState({currentPlayer: nextPlayer})
+        card.target.remove()
+        this.setState({
+          fieldCard: {
+            shape,
+            num
+          }
+        })
+      } else {
+        alert('card must be equal')
+      }
     }
   }
 
   cardChild = (e, shape, num, nextPlayer) => {
 
-    if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
-      e.target.parentElement.remove()
-      this.setState({currentPlayer: nextPlayer})
+    if (this.state.currentPlayer === nextPlayer) {
+      console.log('...')
     } else {
-      alert('card must be equal')
+      if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
+        e.target.parentElement.remove()
+        this.setState({currentPlayer: nextPlayer})
+      } else {
+        alert('card must be equal')
+      }
     }
+
+    
   }
   
 
@@ -132,19 +142,13 @@ class App extends Component {
     return (
       <div className="App">
         <div className="player player1">
-          {/* <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={'star'} num={2}/>
-          <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={'triangle'} num={5}/>
-          <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={'circle'} num={3}/>
-          <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={'star'} num={1}/>
-          <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={'cross'} num={4}/> */}
-
           {
             this.state.player1.cards.map(e=>{
               return  <Card onCardClick={this.onCardClick} cardChild={this.cardChild} shape={e.shape} num={e.num}/>
             })
           }
         </div>
-        <div>
+        <div style={{display: 'flex', alignItems: 'center'}}>
           <div className="field">
             <Card nextPlayer={2} shape={this.state.fieldCard.shape} num={this.state.fieldCard.num} />
           </div>
