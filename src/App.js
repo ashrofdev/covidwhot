@@ -144,6 +144,23 @@ class App extends Component {
       console.log(this.state.player2)
     }
 
+    //////////////// replacinng main card with played /////////////////
+    this.setState({
+      fieldCard: {
+        shape,
+        num
+      }
+    })
+
+  }
+  specialCard = (num, nextPlayer) => {
+    if (num === 1 || num === 8) {
+      this.setState({currentPlayer: this.state.currentPlayer})
+      console.log('there you go')
+    }else {
+      this.setState({currentPlayer: nextPlayer})
+      console.log('move on')
+    }
   }
 
   /////////////////// Card click listener ///////////////
@@ -170,22 +187,17 @@ class App extends Component {
           this.initializeGame()
         }
 
-        //////////////// replacinng main card with played /////////////////
-        this.setState({
-          fieldCard: {
-            shape,
-            num
-          }
-        })
+        
 
         ///////////////////// checking for special cards /////////////////
-        if (num === 1 || num === 8) {
-          this.setState({currentPlayer: this.state.currentPlayer})
-          console.log('there you go')
-        }else {
-          this.setState({currentPlayer: nextPlayer})
-          console.log('move on')
-        }
+        this.specialCard(num, nextPlayer)
+
+      }else if (this.state.fieldCard.num === 1){
+        ////////// playing card //////////
+        this.playCard(shape, num)
+
+        ///////////////////// checking for special cards /////////////////
+        this.specialCard(num, nextPlayer)
 
       } else {
         alert('card must be equal')
