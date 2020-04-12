@@ -39,6 +39,16 @@ class App extends Component {
   }
 
   initializeGame = () => {
+    this.setState(
+      {player1:{
+        name: 'Ashraf',
+        cards: []
+      },
+      player2:{
+        name: 'Ade',
+        cards: []
+      }
+    })
     let count = 0
     for (count; count<5; count++) {
       this.loadCard(1)
@@ -51,8 +61,7 @@ class App extends Component {
   }
 
   loadCard = (player) =>{
-    setTimeout(() => {
-      let num = Math.floor(Math.random()*6)
+    let num = Math.floor(Math.random()*6)
     let shapes = ['cross','triangle','square','circle','star']
 
     const shape = shapes[num]
@@ -88,11 +97,12 @@ class App extends Component {
         player2
       })
     }
-    }, 1000);
   }
 
 
   onCardClick = (card, shape, num, nextPlayer) => {
+    console.log('card')
+
     card.preventDefault()
     
     if (this.state.currentPlayer === nextPlayer) {
@@ -103,6 +113,11 @@ class App extends Component {
 
         const player1 = this.state.player1
         const player2 = this.state.player2
+        
+        const index = player1.cards.findIndex(e=>{
+          return e.shape === 'triangle'
+        })
+        console.log(index)
 
         if (this.state.currentPlayer === 1) {
           player1.cards.splice(player1.cards.indexOf({
@@ -110,19 +125,25 @@ class App extends Component {
             num
           }), 1)
           this.setState({player1})
-          console.log(this.state.player1.cards)
+          console.log(this.state.player1)
         } else {
           player2.cards.splice(player2.cards.indexOf({
             shape,
             num
           }), 1)
           this.setState({player2})
-          console.log(this.state.player2.cards)
+          console.log(this.state.player2)
         }
 
         ////////////////// Checking for winner ////////////////////
 
-        if (this)
+        if (this.state.player1.cards.length===0){
+          alert('player1 is the winner')
+          this.initializeGame()
+        }else if (this.state.player2.cards.length===0){
+          alert('player2 is the winner')
+          this.initializeGame()
+        }
 
         this.setState({
           fieldCard: {
@@ -143,22 +164,6 @@ class App extends Component {
     }
   }
 
-  cardChild = (e, shape, num, nextPlayer) => {
-
-    // if (this.state.currentPlayer === nextPlayer) {
-    //   console.log('...')
-    // } else {
-    //   if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
-    //     e.target.parentElement.remove()
-    //     this.setState({currentPlayer: nextPlayer})
-    //   } else {
-    //     alert('card must be equal')
-    //   }
-    // }
-
-    console.log('fjfj')
-  }
-  
 
 
   generalMarket = () => {
@@ -194,7 +199,7 @@ class App extends Component {
         <div className="player player2">
           {
             this.state.player2.cards.map(e=>{
-              return  <Card nextPlayer={1} onCardClick={this.onCardClick} cardChild={this.cardChild} shape={e.shape} num={e.num}/>
+              return  <Card nextPlayer={1} onCardClick={this.onCardClick} shape={e.shape} num={e.num}/>
             })
           }
         </div>

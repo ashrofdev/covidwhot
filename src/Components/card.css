@@ -5,6 +5,7 @@
     border-radius: .5rem;
     position: relative;
     cursor: pointer;
+    margin: .5rem;
 }
 
 .num {
