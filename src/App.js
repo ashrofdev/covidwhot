@@ -7,10 +7,7 @@ import Card from './Components/Card'
 
 class App extends Component {
   state = {
-    fieldCard: {
-      shape: 'triangle',
-      num: 4
-    },
+    fieldCard: {},
     currentPlayer: 1,
     player1: {
       name: 'Ashraf',
@@ -21,26 +18,50 @@ class App extends Component {
       cards: []
     },
     cards: [
-       [1,2,3,5,7,10,11,13,14],
-       [1,2,3,4,5,7,8,10,11,12,13,14],
-       [1,2,3,5,7,10,11,13,14],
-       [1,2,3,4,5,7,8,10,11,12,13,14],
-       [1,2,3,4,5,7,8],
+       {
+         shape: 'cross',
+         nums: [1,2,3,5,7,10,11,13,14]
+       },
+       {
+         shape: 'triangle',
+         nums: [1,2,3,4,5,7,8,10,11,12,13,14]
+       },
+       {
+         shape: 'square',
+         nums: [1,2,3,5,7,10,11,13,14]
+       },
+       {
+         shape: 'circle',
+         nums: [1,2,3,4,5,7,8,10,11,12,13,14]
+       },
+       {
+         shape: 'star',
+         nums: [1,2,3,4,5,7,8]
+       },
     ]
 
   }
 
-  componentDidMount(){
+  // ['cross','triangle','square','circle','star']
+
+  componentDidMount(){    
     this.initializeGame()
-    this.setState({currentPlayer: 1})
-    const test = ['name', 'of','the','people']
-    test.splice(test.indexOf('of'), 1)
-    console.log(test.indexOf('people'), test)
   }
 
   initializeGame = () => {
+    this.setState({currentPlayer: 1})
+
+    /////  Generating card details for main card and setting a fresh start ////////
+    const shape = this.generateCard().shape
+    const num = this.generateCard().num
+    
     this.setState(
-      {player1:{
+      {
+        fieldCard:{
+          shape,
+          num
+        },
+        player1:{
         name: 'Ashraf',
         cards: []
       },
@@ -49,57 +70,83 @@ class App extends Component {
         cards: []
       }
     })
+
+    /////////////// Loading cards for players ////////////////////////// 
     let count = 0
     for (count; count<5; count++) {
       this.loadCard(1)
       this.loadCard(2)
     }
-
     console.log(this.state.player1)
-
-
   }
 
+  ///////////////  Card Generator  ////////////////////
+  generateCard = () => {
+    let randomNum = Math.floor(Math.random()*5)
+
+    const shape = this.state.cards[randomNum].shape
+    let shapeLength = this.state.cards[randomNum].nums.length
+
+    let id = Math.floor(Math.random()*shapeLength)
+    const num = this.state.cards[randomNum].nums[id]
+
+    return {shape, num}
+  }
+
+  ////////////////////////// Card loader //////////////////////////
   loadCard = (player) =>{
-    let num = Math.floor(Math.random()*6)
-    let shapes = ['cross','triangle','square','circle','star']
+    const shape = this.generateCard().shape
+    const num = this.generateCard().num
 
-    const shape = shapes[num]
-
-
-    let numbers = this.state.cards[num]
-    let len = numbers.length
-    let num2 = Math.floor(Math.random()*len)
-
-    const number = numbers[num2]
-
-    console.log(num2, shape, numbers,len,number)
+    console.log(num, shape)
 
     const player1 = this.state.player1
     const player2 = this.state.player2
 
+    /////////// checking for position to place card //////////
     if (player === 1) {
       player1.cards.push({
         shape,
-        num: number
+        num
       })
   
-      this.setState({
-        player1
-      })
+      this.setState({player1})
     } else {
       player2.cards.push({
         shape,
-        num: number
+        num
       })
   
-      this.setState({
-        player2
-      })
+      this.setState({player2})
     }
   }
 
+  ////////////////////  Card placer ///////////////////////
+  playCard = (shape, num) => {
+    const player1 = this.state.player1
+    const player2 = this.state.player2
+    
+    if (this.state.currentPlayer === 1) {
+      const index = player1.cards.findIndex(e=>{
+        return e.shape === shape && e.num === num
+      })
+      player1.cards.splice(index, 1)
 
+      this.setState({player1})
+      console.log(this.state.player1)
+    } else {
+      const index = player2.cards.findIndex(e=>{
+        return e.shape === shape && e.num === num
+      })
+      player2.cards.splice(index, 1)
+
+      this.setState({player2})
+      console.log(this.state.player2)
+    }
+
+  }
+
+  /////////////////// Card click listener ///////////////
   onCardClick = (card, shape, num, nextPlayer) => {
     console.log('card')
 
@@ -110,30 +157,8 @@ class App extends Component {
     } else {
       if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
         
-
-        const player1 = this.state.player1
-        const player2 = this.state.player2
-        
-        const index = player1.cards.findIndex(e=>{
-          return e.shape === 'triangle'
-        })
-        console.log(index)
-
-        if (this.state.currentPlayer === 1) {
-          player1.cards.splice(player1.cards.indexOf({
-            shape,
-            num
-          }), 1)
-          this.setState({player1})
-          console.log(this.state.player1)
-        } else {
-          player2.cards.splice(player2.cards.indexOf({
-            shape,
-            num
-          }), 1)
-          this.setState({player2})
-          console.log(this.state.player2)
-        }
+        ////////// playing card //////////
+        this.playCard(shape, num)
 
         ////////////////// Checking for winner ////////////////////
 
@@ -149,15 +174,15 @@ class App extends Component {
           fieldCard: {
             shape,
             num
-          },
-          currentPlayer: nextPlayer
+          }
         })
 
+        if (this.state.fieldCard.num === 1) {
+          this.setState({currentPlayer: this.state.currentPlayer})
+        }else {
+          this.setState({currentPlayer: nextPlayer})
+        }
 
-        // document.querySelector('.field').classList.add('anime')
-        // setTimeout(() => {
-        //   document.querySelector('.field').classList.remove('anime')
-        // }, 1000);
       } else {
         alert('card must be equal')
       }
