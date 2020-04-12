@@ -170,6 +170,7 @@ class App extends Component {
           this.initializeGame()
         }
 
+        //////////////// replacinng main card with played /////////////////
         this.setState({
           fieldCard: {
             shape,
@@ -177,10 +178,13 @@ class App extends Component {
           }
         })
 
-        if (this.state.fieldCard.num === 1) {
+        ///////////////////// checking for special cards /////////////////
+        if (num === 1 || num === 8) {
           this.setState({currentPlayer: this.state.currentPlayer})
+          console.log('there you go')
         }else {
           this.setState({currentPlayer: nextPlayer})
+          console.log('move on')
         }
 
       } else {
