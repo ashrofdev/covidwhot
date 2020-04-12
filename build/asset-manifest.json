@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/covidwhot/static/css/main.21837601.chunk.css",
+    "main.js": "/covidwhot/static/js/main.e210828b.chunk.js",
+    "main.js.map": "/covidwhot/static/js/main.e210828b.chunk.js.map",
+    "runtime-main.js": "/covidwhot/static/js/runtime-main.023e2115.js",
+    "runtime-main.js.map": "/covidwhot/static/js/runtime-main.023e2115.js.map",
+    "static/js/2.049adbfa.chunk.js": "/covidwhot/static/js/2.049adbfa.chunk.js",
+    "static/js/2.049adbfa.chunk.js.map": "/covidwhot/static/js/2.049adbfa.chunk.js.map",
+    "index.html": "/covidwhot/index.html",
+    "precache-manifest.665af68f97f087ea6df271cabbe9c383.js": "/covidwhot/precache-manifest.665af68f97f087ea6df271cabbe9c383.js",
+    "service-worker.js": "/covidwhot/service-worker.js",
+    "static/css/main.21837601.chunk.css.map": "/covidwhot/static/css/main.21837601.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.023e2115.js",
+    "static/js/2.049adbfa.chunk.js",
+    "static/css/main.21837601.chunk.css",
+    "static/js/main.e210828b.chunk.js"
+  ]
+}

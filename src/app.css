@@ -19,8 +19,21 @@ body {
     position: relative;
 }
 
+@keyframes anime {
+    0% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.anime {
+    animation: anime 1s;
+}
 
 .player {
     display: flex;
     justify-content: space-between;
+    transition: all 1s;
+    overflow: scroll;
 }

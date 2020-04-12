@@ -33,6 +33,9 @@ class App extends Component {
   componentDidMount(){
     this.initializeGame()
     this.setState({currentPlayer: 1})
+    const test = ['name', 'of','the','people']
+    test.splice(test.indexOf('of'), 1)
+    console.log(test.indexOf('people'), test)
   }
 
   initializeGame = () => {
@@ -96,14 +99,44 @@ class App extends Component {
       alert('not your turn')
     } else {
       if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
-        this.setState({currentPlayer: nextPlayer})
-        card.target.remove()
+        
+
+        const player1 = this.state.player1
+        const player2 = this.state.player2
+
+        if (this.state.currentPlayer === 1) {
+          player1.cards.splice(player1.cards.indexOf({
+            shape,
+            num
+          }), 1)
+          this.setState({player1})
+          console.log(this.state.player1.cards)
+        } else {
+          player2.cards.splice(player2.cards.indexOf({
+            shape,
+            num
+          }), 1)
+          this.setState({player2})
+          console.log(this.state.player2.cards)
+        }
+
+        ////////////////// Checking for winner ////////////////////
+
+        if (this)
+
         this.setState({
           fieldCard: {
             shape,
             num
-          }
+          },
+          currentPlayer: nextPlayer
         })
+
+
+        // document.querySelector('.field').classList.add('anime')
+        // setTimeout(() => {
+        //   document.querySelector('.field').classList.remove('anime')
+        // }, 1000);
       } else {
         alert('card must be equal')
       }
@@ -112,18 +145,18 @@ class App extends Component {
 
   cardChild = (e, shape, num, nextPlayer) => {
 
-    if (this.state.currentPlayer === nextPlayer) {
-      console.log('...')
-    } else {
-      if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
-        e.target.parentElement.remove()
-        this.setState({currentPlayer: nextPlayer})
-      } else {
-        alert('card must be equal')
-      }
-    }
+    // if (this.state.currentPlayer === nextPlayer) {
+    //   console.log('...')
+    // } else {
+    //   if (this.state.fieldCard.shape === shape || this.state.fieldCard.num === num) {
+    //     e.target.parentElement.remove()
+    //     this.setState({currentPlayer: nextPlayer})
+    //   } else {
+    //     alert('card must be equal')
+    //   }
+    // }
 
-    
+    console.log('fjfj')
   }
   
 
