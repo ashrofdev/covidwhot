@@ -49,7 +49,6 @@ class App extends Component {
   }
 
   initializeGame = () => {
-    this.setState({currentPlayer: 1})
 
     /////  Generating card details for main card and setting a fresh start ////////
     const shape = this.generateCard().shape
@@ -57,23 +56,24 @@ class App extends Component {
     
     this.setState(
       {
+        currentPlayer: 1,
         fieldCard:{
           shape,
           num
         },
         player1:{
-        name: 'Ashraf',
-        cards: []
-      },
-      player2:{
-        name: 'Ade',
-        cards: []
-      }
+          name: 'Ashraf',
+          cards: []
+        },
+        player2:{
+          name: 'Ade',
+          cards: []
+        }
     })
 
     /////////////// Loading cards for players ////////////////////////// 
     let count = 0
-    for (count; count<5; count++) {
+    for (count; count<1; count++) {
       this.loadCard(1)
       this.loadCard(2)
     }
@@ -105,14 +105,14 @@ class App extends Component {
 
     /////////// checking for position to place card //////////
     if (player === 1) {
-      player1.cards.push({
+      player1.cards.unshift({
         shape,
         num
       })
   
       this.setState({player1})
     } else {
-      player2.cards.push({
+      player2.cards.unshift({
         shape,
         num
       })
@@ -123,6 +123,11 @@ class App extends Component {
 
   ////////////////////  Card placer ///////////////////////
   playCard = (shape, num) => {
+
+    // document.querySelector('.field').classList.add('anime')
+    // setTimeout(() => {
+    //   document.querySelector('.field').classList.remove('anime')
+    // }, 1000);
     const player1 = this.state.player1
     const player2 = this.state.player2
     
@@ -182,9 +187,11 @@ class App extends Component {
         if (this.state.player1.cards.length===0){
           alert('player1 is the winner')
           this.initializeGame()
+          this.componentDidMount()
         }else if (this.state.player2.cards.length===0){
           alert('player2 is the winner')
           this.initializeGame()
+          this.componentDidMount()
         }
 
         

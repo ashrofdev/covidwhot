@@ -20,6 +20,6 @@ let users = [
 
 const name = 'Daniel'
 
-let index = users.findIndex(e=>e.name===name)
+users.unshift('name,name')
 
-console.log(index)
+console.log(users)
